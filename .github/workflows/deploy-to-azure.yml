@@ -59,7 +59,7 @@ jobs:
         with:
           app-name: cwjg-contacts-noauth-web
           publish-profile: ${{ secrets.WEB_UI_NOAUTH_PUBLISH_PROFILE  }}
-          package: '${{ env.AZURE_WebUi_APP_PACKAGE_PATH }}'
+          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
       - name: Download artifact from build job - Web API
         uses: actions/download-artifact@v3
         with:
