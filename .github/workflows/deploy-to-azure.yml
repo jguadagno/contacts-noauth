@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 env:
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-  AZURE_WEBAPI_PACKAGE_PATH: '.'
+  AZURE_WEBAPP_PACKAGE_PATH: './src/Contacts.WebUi'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPI_PACKAGE_PATH: './src/Contacts.Api'
   DOTNET_CORE_VERSION: 7.0.x
 
 jobs:
@@ -54,21 +54,23 @@ jobs:
         with:
           name: webapp
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-      - name: Deploy to Azure Function App
+      - name: Deploy - Web UI
         uses: Azure/webapps-deploy@v2
         with:
           app-name: cwjg-contacts-noauth-web
           publish-profile: ${{ secrets.WEB_UI_NOAUTH_PUBLISH_PROFILE  }}
           package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+          clean: true
       - name: Download artifact from build job - Web API
         uses: actions/download-artifact@v3
         with:
           name: webapi
           path: ${{ env.AZURE_WEBAPI_PACKAGE_PATH }}
-      - name: Azure WebApp - Web API
+      - name: Deploy - Web API
         uses: Azure/webapps-deploy@v2
         with:
           app-name: cwjg-contacts-noauth-api
           publish-profile: ${{ secrets.WEB_API_NOAUTH_PUBLISH_PROFILE  }}
           package: '${{ env.AZURE_WEBAPI_PACKAGE_PATH }}'
+          clean: true
     
