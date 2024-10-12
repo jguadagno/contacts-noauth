@@ -1,7 +1,6 @@
-namespace Contacts.Domain.Interfaces
+namespace Contacts.Domain.Interfaces;
+
+public interface IThumbnailImageStore: IImageStore
 {
-    public interface IThumbnailImageStore: IImageStore
-    {
         
-    }
 }

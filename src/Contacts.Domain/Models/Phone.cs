@@ -1,15 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Contacts.Domain.Models
+namespace Contacts.Domain.Models;
+
+[ExcludeFromCodeCoverage]
+
+public class Phone 
 {
-    [ExcludeFromCodeCoverage]
+    public int PhoneId { get; set; }
+    public string PhoneNumber { get; set; }
+    public string Extension { get; set; }
 
-    public class Phone 
-    {
-        public int PhoneId { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Extension { get; set; }
-
-        public PhoneType PhoneType { get; set;}
-    }
+    public PhoneType PhoneType { get; set;}
 }

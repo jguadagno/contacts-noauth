@@ -6,8 +6,6 @@ using Contacts.Data.SqlServer;
 using Contacts.Domain.Interfaces;
 using Contacts.Logic;
 using Microsoft.AspNetCore.Builder;
-
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -24,7 +22,7 @@ try
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
 
-    ConfigureServices(builder.Configuration, builder.Services);
+    ConfigureServices(builder.Services);
 
     var app = builder.Build();
 
@@ -33,7 +31,7 @@ try
         app.UseDeveloperExceptionPage();
     }
 
-    ConfigureMiddleware(app, app.Services);
+    ConfigureMiddleware(app);
     app.Run();
 }
 catch (Exception exception)
@@ -48,7 +46,7 @@ finally
     LogManager.Shutdown();
 }
 
-void ConfigureServices(ConfigurationManager configuration, IServiceCollection services)
+void ConfigureServices(IServiceCollection services)
 {
     services.AddApplicationInsightsTelemetry();
 
@@ -87,7 +85,7 @@ void ConfigureServices(ConfigurationManager configuration, IServiceCollection se
     services.AddTransient<IContactManager, ContactManager>();
 }
 
-void ConfigureMiddleware(IApplicationBuilder app, IServiceProvider services)
+void ConfigureMiddleware(IApplicationBuilder app)
 {
             
     // TODO: Research and document for React Native client

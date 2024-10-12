@@ -1,14 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Contacts.Data.Sqlite.Models
+namespace Contacts.Data.Sqlite.Models;
+
+[ExcludeFromCodeCoverage]
+
+public class AddressType
 {
-    [ExcludeFromCodeCoverage]
+    public int AddressTypeId { get; set; }
+    public string Type { get; set; }
+    public string Description { get; set; }
 
-    public class AddressType
-    {
-        public int AddressTypeId { get; set; }
-        public string Type { get; set; }
-        public string Description { get; set; }
-
-    }
 }
