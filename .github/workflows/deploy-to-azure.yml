@@ -9,7 +9,7 @@ on:
 env:
   AZURE_WEBAPP_PACKAGE_PATH: './src/Contacts.WebUi'      # set this to the path to your web app project, defaults to the repository root
   AZURE_WEBAPI_PACKAGE_PATH: './src/Contacts.Api'
-  DOTNET_CORE_VERSION: 7.0.x
+  DOTNET_CORE_VERSION: 9.0.x
 
 jobs:
   build:
@@ -35,12 +35,12 @@ jobs:
     - name: Publish Web API
       run: dotnet publish ./src/Contacts.Api/Contacts.Api.csproj  -c Release -o '${{ env.AZURE_WEBAPI_PACKAGE_PATH }}'
     - name: Publish Web UI Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
     - name: Publish Web API Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: webapi
         path: ${{ env.AZURE_WEBAPI_PACKAGE_PATH }}
@@ -50,7 +50,7 @@ jobs:
     needs: build
     steps:
       - name: Download artifact from build job - Web UI
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: webapp
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
@@ -62,7 +62,7 @@ jobs:
           package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
           clean: true
       - name: Download artifact from build job - Web API
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: webapi
           path: ${{ env.AZURE_WEBAPI_PACKAGE_PATH }}
