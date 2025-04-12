@@ -45,22 +45,6 @@ void ConfigureServices(IConfiguration configuration, IServiceCollection services
 {
     var settings = new Settings();
     configuration.Bind("Settings", settings);
-            
-    //  For Project Tye
-    var uri = configuration.GetServiceUri("contacts-api", "https");
-    // If the uri is null we assume Tye is not running.
-    // If not null, assure Uri ends in /
-    if (uri != null)
-    {
-        var url = uri.AbsoluteUri;
-        if (!url.EndsWith("/"))
-        {
-            url += "/";
-        }
-        // https://localhost:5001/
-        settings.ApiRootUri = url;
-    }
-    
     services.AddSingleton(settings);
             
     Console.WriteLine(settings.ApiRootUri);

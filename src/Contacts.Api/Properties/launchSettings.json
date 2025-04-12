@@ -9,19 +9,19 @@
     }
   },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "contacts",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "Contacts.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "contacts",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "contacts",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

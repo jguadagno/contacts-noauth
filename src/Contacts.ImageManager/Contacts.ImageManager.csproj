@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <LangVersion>default</LangVersion>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>warnings</Nullable>
     </PropertyGroup>
 
@@ -12,7 +12,7 @@
 
     <ItemGroup>
       <PackageReference Include="JosephGuadagno.AzureHelpers.Storage" Version="1.1.8" />
-      <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
+      <PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
     </ItemGroup>
 
 </Project>
