@@ -41,13 +41,13 @@ public class ImageManager: IImageManager
 
         var imageUrl = await _imageStore.SaveImageAsync(imageStream, filename);
             
-        var thumbnailCreateMessage = new Domain.Models.Messages.ImageToConvert
-        {
-            ContainerName = _imageStore.GetBlobContainerName(),
-            ImageName = filename
-        };
-            
-        var sendReceipt = await _queue.AddMessageWithBase64EncodingAsync(thumbnailCreateMessage);
+        // var thumbnailCreateMessage = new Domain.Models.Messages.ImageToConvert
+        // {
+        //     ContainerName = _imageStore.GetBlobContainerName(),
+        //     ImageName = filename
+        // };
+        //     
+        // var sendReceipt = await _queue.AddMessageWithBase64EncodingAsync(thumbnailCreateMessage);
         return imageUrl;
     }
 
