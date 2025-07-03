@@ -13,7 +13,7 @@ CREATE DATABASE Contacts;
 GO
 
 -- Create the User for Logging in
-CREATE LOGIN contact_user
+CREATE LOGIN contacts_user
     WITH Password = '***<secure_password>***';
 GO
 
@@ -22,7 +22,7 @@ USE Contacts
 GO
 
 -- Create the user in the database
-CREATE USER  contact_user FOR LOGIN contact_user;
+CREATE USER  contacts_user FOR LOGIN contacts_user;
 GO
 
 -- Update the users permissions
