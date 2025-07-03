@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExtraStuff", "ExtraStuff", "{F237316C-4113-4191-9EF7-EFA8065ED236}"
 	ProjectSection(SolutionItems) = preProject
 		Contacts-Sample-Requests.http = Contacts-Sample-Requests.http
+		..\.github\workflows\deploy-to-azure.yml = ..\.github\workflows\deploy-to-azure.yml
 		..\outline.md = ..\outline.md
 		..\README.md = ..\README.md
 		..\sql-server.md = ..\sql-server.md
