@@ -5,35 +5,20 @@ create table AddressTypes
 (
     AddressTypeId int identity
         primary key,
-    Type          varchar(max),
-    Description   text
+    Type          nvarchar(max),
+    Description   nvarchar(max)
 )
-go
-
-create table Cache
-(
-    Id                         nvarchar(449)  not null
-        primary key,
-    Value                      varbinary(max) not null,
-    ExpiresAtTime              datetimeoffset not null,
-    SlidingExpirationInSeconds bigint,
-    AbsoluteExpiration         datetimeoffset
-)
-go
-
-create index Index_ExpiresAtTime
-    on Cache (ExpiresAtTime)
 go
 
 create table Contacts
 (
     ContactId    int identity
         primary key,
-    FirstName    text,
-    MiddleName   text,
-    LastName     text,
-    EmailAddress text,
-    ImageUrl     text,
+    FirstName    nvarchar(max),
+    MiddleName   nvarchar(max),
+    LastName     nvarchar(max),
+    EmailAddress nvarchar(max),
+    ImageUrl     nvarchar(max),
     Birthday     datetime,
     Anniversary  datetime
 )
@@ -43,13 +28,13 @@ create table Addresses
 (
     AddressId        int identity
         primary key,
-    StreetAddress    text,
-    SecondaryAddress text,
-    Unit             text,
-    City             text,
-    State            text,
-    Country          text,
-    PostalCode       text,
+    StreetAddress    nvarchar(max),
+    SecondaryAddress nvarchar(max),
+    Unit             nvarchar(max),
+    City             nvarchar(max),
+    State            nvarchar(max),
+    Country          nvarchar(max),
+    PostalCode       nvarchar(max),
     AddressTypeId    int
         constraint FK_Addresses_AddressTypes_AddressTypeId
             references AddressTypes
@@ -88,8 +73,8 @@ create table PhoneTypes
 (
     PhoneTypeId int identity
         primary key,
-    Type        text,
-    Description text
+    Type        nvarchar(max),
+    Description nvarchar(max)
 )
 go
 
@@ -97,8 +82,8 @@ create table Phones
 (
     PhoneId     int identity
         primary key,
-    PhoneNumber text,
-    Extension   text,
+    PhoneNumber nvarchar(max),
+    Extension   nvarchar(max),
     PhoneTypeId int
         constraint FK_Phones_PhoneTypes_PhoneTypeId
             references PhoneTypes
@@ -117,13 +102,3 @@ go
 create index IX_Phones_PhoneTypeId
     on Phones (PhoneTypeId)
 go
-
-create table __EFMigrationsHistory
-(
-    MigrationId    varchar(256) not null
-        constraint PK___EFMigrationsHistory
-            primary key,
-    ProductVersion varchar(max) not null
-)
-go
-
