@@ -21,7 +21,7 @@ try
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
-
+    
     ConfigureServices(builder.Services);
 
     var app = builder.Build();
@@ -45,6 +45,8 @@ finally
     // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
     LogManager.Shutdown();
 }
+
+
 
 void ConfigureServices(IServiceCollection services)
 {
