@@ -73,14 +73,6 @@ void ConfigureServices(IConfiguration configuration, IServiceCollection services
         : new Queue(settings.ThumbnailQueueStorageAccountName, null, settings.ThumbnailQueueName));
     
     services.AddApplicationInsightsTelemetry();
-    
-    services.AddDistributedSqlServerCache(options =>
-    {
-        options.ConnectionString = 
-            configuration.GetConnectionString("ContactsDatabaseSqlServer");
-        options.SchemaName = "dbo";
-        options.TableName = "Cache";
-    });
 
     services.AddControllersWithViews();
     services.AddContactService();

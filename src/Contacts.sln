@@ -27,8 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{
 	ProjectSection(SolutionItems) = preProject
 		..\db-scripts\sqlserver\create-data.sql = ..\db-scripts\sqlserver\create-data.sql
 		..\db-scripts\sqlserver\create-tables.sql = ..\db-scripts\sqlserver\create-tables.sql
-		..\db-scripts\sqlserver\create-user.sql = ..\db-scripts\sqlserver\create-user.sql
 		..\db-scripts\sqlserver\readme.md = ..\db-scripts\sqlserver\readme.md
+		..\db-scripts\sqlserver\create-database-and-user.sql = ..\db-scripts\sqlserver\create-database-and-user.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sqlite", "Sqlite", "{A887E7C4-B0BC-42EA-BF4E-A564BBFF30C6}"
@@ -86,6 +86,14 @@ Global
 		{559F81DB-27D1-49D9-9DF6-C1C5B2F63C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{559F81DB-27D1-49D9-9DF6-C1C5B2F63C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{559F81DB-27D1-49D9-9DF6-C1C5B2F63C46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CD377A8-6BAB-41F2-BC1D-B25AC0F74089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CD377A8-6BAB-41F2-BC1D-B25AC0F74089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CD377A8-6BAB-41F2-BC1D-B25AC0F74089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CD377A8-6BAB-41F2-BC1D-B25AC0F74089}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D45C96C-949A-4C6F-B331-B122426B5612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D45C96C-949A-4C6F-B331-B122426B5612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D45C96C-949A-4C6F-B331-B122426B5612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D45C96C-949A-4C6F-B331-B122426B5612}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
