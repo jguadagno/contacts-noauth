@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog;
@@ -46,10 +47,10 @@ void ConfigureServices(IConfiguration configuration, IServiceCollection services
     var settings = new Settings();
     configuration.Bind("Settings", settings);
     services.AddSingleton(settings);
-            
-    Console.WriteLine(settings.ApiRootUri);
-    
-    services.AddSingleton<IImageStore>(_ =>
+
+    services.AddHttpClient();
+    services.TryAddScoped<IContactService, ContactService>();
+    services.TryAddScoped<IImageStore>(_ =>
     {
         var blobs = environment.IsDevelopment()
             ? new Blobs(settings.ContactBlobStorageAccount, settings.ContactImageContainerName)
@@ -57,7 +58,7 @@ void ConfigureServices(IConfiguration configuration, IServiceCollection services
         return new ImageStore(blobs);
     });
     
-    services.AddSingleton<IThumbnailImageStore>(_ =>
+    services.TryAddScoped<IThumbnailImageStore>(_ =>
     {
         var blobs = environment.IsDevelopment()
             ? new Blobs(settings.ContactBlobStorageAccount, settings.ContactThumbnailImageContainerName)
@@ -65,17 +66,15 @@ void ConfigureServices(IConfiguration configuration, IServiceCollection services
         return new ThumbnailImageStore(blobs);
     });
 
-    services.AddSingleton<IImageManager, ImageManager>();
+    services.TryAddScoped<IImageManager, ImageManager>();
     
     // Register Thumbnail Create Queue
-    services.AddSingleton(_ => environment.IsDevelopment()
+    services.TryAddScoped(_ => environment.IsDevelopment()
         ? new Queue(settings.ThumbnailQueueStorageAccount, settings.ThumbnailQueueName)
         : new Queue(settings.ThumbnailQueueStorageAccountName, null, settings.ThumbnailQueueName));
     
     services.AddApplicationInsightsTelemetry();
-
     services.AddControllersWithViews();
-    services.AddContactService();
     services.AddRazorPages();
 }
 
