@@ -32,6 +32,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Contacts.Domain\Contacts.Domain.csproj" />
       <ProjectReference Include="..\Contacts.ImageManager\Contacts.ImageManager.csproj" />
+      <ProjectReference Include="..\Contacts.ServiceDefaults\Contacts.ServiceDefaults.csproj" />
     </ItemGroup>
 
     <ItemGroup>

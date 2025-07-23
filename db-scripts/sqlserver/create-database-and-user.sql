@@ -18,7 +18,7 @@ USE master
 -- ***NOTE***: Change `<secure_password>` to a secure password
 
 CREATE Login contacts_user
-    WITH PASSWORD='<secure_password>'
+    WITH PASSWORD='P@ssw0rd1'
 GO
 
 USE Contacts

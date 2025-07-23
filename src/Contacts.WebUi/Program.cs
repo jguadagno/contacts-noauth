@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using Azure.Storage.Blobs.Models;
 using Contacts.Domain.Interfaces;
 using Contacts.ImageManager;
 using Contacts.WebUi.Models;
@@ -21,6 +23,8 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
+    builder.AddServiceDefaults();
+    
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
 
@@ -28,6 +32,9 @@ try
 
     var app = builder.Build();
     ConfigureMiddleware(app, builder.Environment);
+    
+    app.MapDefaultEndpoints();
+    
     app.Run();
 }
 catch (Exception exception)
@@ -46,16 +53,30 @@ void ConfigureServices(IConfiguration configuration, IServiceCollection services
 {
     var settings = new Settings();
     configuration.Bind("Settings", settings);
+
+    if (environment.IsDevelopment())
+    {
+        var endpoint = settings.ContactBlobStorageAccount.Split(';').First(x => x.StartsWith("BlobEndpoint"));
+        settings.ContactImageUrl =  endpoint.Split('=')[1].TrimEnd('/') + "/";
+    }
+    
     services.AddSingleton(settings);
 
     services.AddHttpClient();
     services.TryAddScoped<IContactService, ContactService>();
     services.TryAddScoped<IImageStore>(_ =>
     {
-        var blobs = environment.IsDevelopment()
-            ? new Blobs(settings.ContactBlobStorageAccount, settings.ContactImageContainerName)
-            : new Blobs(settings.ContactBlobStorageAccountName, null, settings.ContactImageContainerName);
-        return new ImageStore(blobs);
+        if (environment.IsDevelopment())
+        {
+            var blob = new Blobs(settings.ContactBlobStorageAccount, settings.ContactImageContainerName);
+            blob.BlobContainerClient.SetAccessPolicy(PublicAccessType.Blob);
+            
+            return new ImageStore(blob);
+        }
+
+        return new ImageStore(
+            new Blobs(settings.ContactBlobStorageAccountName, null, settings.ContactImageContainerName));
+
     });
     
     services.TryAddScoped<IThumbnailImageStore>(_ =>

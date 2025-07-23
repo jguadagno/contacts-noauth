@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExtraStuff", "ExtraStuff", 
 		..\.github\workflows\deploy-to-azure.yml = ..\.github\workflows\deploy-to-azure.yml
 		..\outline.md = ..\outline.md
 		..\README.md = ..\README.md
+		..\.gitignore = ..\.gitignore
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLServer", "SQLServer", "{6385B702-FE45-4AEF-93CC-E724BEC47B0D}"
@@ -43,6 +44,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contacts.Data.SqlServer", "Contacts.Data.SqlServer\Contacts.Data.SqlServer.csproj", "{A4AB8B52-C09E-4E50-B146-CD3A7BA001F5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contacts.ImageManager", "Contacts.ImageManager\Contacts.ImageManager.csproj", "{559F81DB-27D1-49D9-9DF6-C1C5B2F63C46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.ServiceDefaults", "Contacts.ServiceDefaults\Contacts.ServiceDefaults.csproj", "{3CD377A8-6BAB-41F2-BC1D-B25AC0F74089}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.AppHost", "Contacts.AppHost\Contacts.AppHost.csproj", "{2D45C96C-949A-4C6F-B331-B122426B5612}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
