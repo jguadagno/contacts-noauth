@@ -54,18 +54,15 @@ create index IX_Addresses_ContactId
     on Addresses (ContactId)
 go
 
-create table Log
-(
-    Id          int identity
-        constraint [PK_dbo.Log]
-            primary key,
-    MachineName nvarchar(50)  not null,
-    Logged      datetime      not null,
-    Level       nvarchar(50)  not null,
-    Message     nvarchar(max) not null,
-    Logger      nvarchar(250),
-    Callsite    nvarchar(max),
-    Exception   nvarchar(max)
+create table Logs (
+    Id              int IDENTITY(1,1) NOT NULL,
+    Message         nvarchar(max) NULL,
+    MessageTemplate nvarchar(max) NULL,
+    Level           nvarchar(max) NULL,
+    TimeStamp       datetime NULL,
+    Exception       nvarchar(max) NULL,
+    Properties      nvarchar(max) NULL
+    CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED (Id ASC)
 )
 go
 
