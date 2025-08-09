@@ -1,5 +1,3 @@
-using Azure.Provisioning.Storage;
-
 var builder = DistributedApplication.CreateBuilder(args);
 
 // Comments out the following 2 lines if you are using Sqlite
@@ -24,11 +22,11 @@ var blobStorage = builder.AddAzureStorage("AzureStorage")
     .RunAsEmulator(azurite =>
     {
         azurite.WithLifetime(ContainerLifetime.Persistent);
-    })
-    .AddBlobs("cwjgcontacts");
+    });
 
-blobStorage.AddBlobContainer("contact-images");
-blobStorage.AddBlobContainer("contact-images-thumbnails");
+var imageContainer = blobStorage.AddBlobContainer("contact-images");
+var thumbnailContainer = blobStorage.AddBlobContainer("contact-images-thumbnails");
+
 
 var api = builder.AddProject<Projects.Contacts_Api>("contacts-api")
     .WaitFor(db)
@@ -37,10 +35,9 @@ var api = builder.AddProject<Projects.Contacts_Api>("contacts-api")
 builder.AddProject<Projects.Contacts_WebUi>("contacts-web-ui")
     .WithReference(api)
     .WaitFor(api)
-    .WithReference(blobStorage)
     .WaitFor(blobStorage)
-    .WithEnvironment("Settings__ContactBlobStorageAccount", blobStorage)
-    .WithEnvironment("Settings__ContactThumbnailBlobStorageAccountName", blobStorage);
+    .WithEnvironment("Settings__ContactBlobStorageAccount", imageContainer)
+    .WithEnvironment("Settings__ContactThumbnailBlobStorageAccountName", thumbnailContainer);
    
 builder.Build().Run();
 
