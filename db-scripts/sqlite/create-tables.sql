@@ -46,3 +46,13 @@ create table main.Phones
     PhoneTypeId integer,
     ContactId   integer
 );
+
+create table main.Logs (
+  Id              integer,
+  Message         nvarchar,
+  MessageTemplate nvarchar,
+  Level           nvarchar,
+  TimeStamp       datetime,
+  Exception       nvarchar,
+  Properties      nvarchar
+);
