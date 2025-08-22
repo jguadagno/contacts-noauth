@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using Azure.Storage.Blobs.Models;
@@ -16,7 +17,6 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.MSSqlServer;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +40,7 @@ void ConfigureServices(IConfiguration configuration, IServiceCollection services
     {
         var endpoint = settings.ContactBlobStorageAccount.Split(';').First(x => x.StartsWith("BlobEndpoint"));
         settings.ContactImageUrl =  endpoint.Split('=')[1].TrimEnd('/') + "/";
+        settings.ContactBlobStorageAccount = settings.ContactBlobStorageAccount.Substring(0, settings.ContactBlobStorageAccount.IndexOf(";;", StringComparison.Ordinal));
     }
     
     services.AddSingleton(settings);
@@ -56,7 +57,6 @@ void ConfigureServices(IConfiguration configuration, IServiceCollection services
         {
             var blob = new Blobs(settings.ContactBlobStorageAccount, settings.ContactImageContainerName);
             blob.BlobContainerClient.SetAccessPolicy(PublicAccessType.Blob);
-            
             return new ImageStore(blob);
         }
 
@@ -67,10 +67,16 @@ void ConfigureServices(IConfiguration configuration, IServiceCollection services
     
     services.TryAddScoped<IThumbnailImageStore>(_ =>
     {
-        var blobs = environment.IsDevelopment()
-            ? new Blobs(settings.ContactBlobStorageAccount, settings.ContactThumbnailImageContainerName)
-            : new Blobs(settings.ContactBlobStorageAccountName, null, settings.ContactThumbnailImageContainerName);
-        return new ThumbnailImageStore(blobs);
+        if (environment.IsDevelopment())
+        {
+            var blob = new Blobs(settings.ContactBlobStorageAccount, settings.ContactThumbnailImageContainerName);
+            blob.BlobContainerClient.SetAccessPolicy(PublicAccessType.Blob);
+            return new ThumbnailImageStore(blob);
+        }
+
+        return new ThumbnailImageStore(
+            new Blobs(settings.ContactBlobStorageAccountName, null, settings.ContactThumbnailImageContainerName));
+
     });
 
     services.TryAddScoped<IImageManager, ImageManager>();
