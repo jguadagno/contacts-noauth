@@ -144,7 +144,7 @@ void ConfigureLogging(IConfigurationRoot configurationRoot, IServiceCollection s
         loggingBuilder.AddApplicationInsights(configureTelemetryConfiguration: (config) =>
                 config.ConnectionString =
                     configurationRoot["ApplicationInsights:ConnectionString"],
-            configureApplicationInsightsLoggerOptions: (_) => { });loggingBuilder.AddApplicationInsights();
+            configureApplicationInsightsLoggerOptions: (_) => { });
         loggingBuilder.AddSerilog(logger);
     });
 }

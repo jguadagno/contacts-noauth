@@ -1,6 +1,4 @@
-using System;
 using System.IO;
-using System.Reflection;
 using Contacts.Data;
 using Contacts.Data.SqlServer;
 using Contacts.Domain.Interfaces;
@@ -10,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
+using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.MSSqlServer;
@@ -25,6 +23,8 @@ var app = builder.Build();
 if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.MapOpenApi();
+    app.MapScalarApiReference("/scalar");
 }
 
 ConfigureMiddleware(app);
@@ -33,7 +33,6 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services)
 {
-    
     services.AddApplicationInsightsTelemetry();
 
     // Configure the logger
@@ -45,28 +44,12 @@ void ConfigureServices(IServiceCollection services)
     services.AddCors();
 
     services.AddEndpointsApiExplorer();
-    // Register the Swagger generator, defining 1 or more Swagger documents
-    services.AddSwaggerGen(c =>
+    // Configure OpenAPI
+    // Learn more about configuring OpenAPI at https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/overview
+    // With help from https://hals.app/blog/dotnet-openapi-scalar-oauth2/
+    builder.Services.AddOpenApi(options =>
     {
-        c.SwaggerDoc("v1",
-            new OpenApiInfo
-            {
-                Title = "Coding with JoeG Contact API", 
-                Version = "v1",
-                Description = "The API for the Contacts Application on Coding with JoeG",
-                TermsOfService = new Uri("https://example.com/terms"),
-                Contact = new OpenApiContact
-                {
-                    Name = "Joseph Guadagno",
-                    Email = "jguadagno@hotmail.com",
-                    Url = new Uri("https://www.josephguadagno.net"),
-                }
-            });
-                
-        // Set the comments path for the Swagger JSON and UI.
-        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-        c.IncludeXmlComments(xmlPath);
+        options.AddDocumentTransformer<Contacts.Api.XmlDocumentTransformer>();
     });
             
     services.AddTransient<IContactDataStore, SqlServerDataStore>();
@@ -83,16 +66,6 @@ void ConfigureMiddleware(IApplicationBuilder applicationBuilder)
         .AllowAnyMethod()
         .AllowAnyHeader()
         .WithOrigins("https://localhost:44311", "https://localhost:5001", "https://cwjg-contacts-web.azurewebsites.net"));
-            
-    // Enable middleware to serve generated Swagger as a JSON endpoint.
-    applicationBuilder.UseSwagger();
-
-    // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-    // specifying the Swagger JSON endpoint.
-    applicationBuilder.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Coding with JoeG Contact Api V1");
-    });
 
     applicationBuilder.UseHttpsRedirection();
     applicationBuilder.UseRouting();
