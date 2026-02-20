@@ -4,7 +4,7 @@ This repository is being used for several presentations. It's based off of the [
 
 ## Software Tools
 
-You'll need to have at least on of the following Integrated Development Environments (IDEs) installed:
+You'll need to have at least one of the following Integrated Development Environments (IDEs) installed:
 
 * [Visual Studio](https://visualstudio.microsoft.com/) [Code](https://code.visualstudio.com/?wt.mc_id=DX_841432) ([Mac](https://code.visualstudio.com/docs/?dv=osx) / [Windows](https://code.visualstudio.com/?wt.mc_id=DX_841432#))
 * [Visual Studio](https://visualstudio.microsoft.com/) Community ([Windows](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=16))
@@ -12,7 +12,7 @@ You'll need to have at least on of the following Integrated Development Environm
 
 ## Databases
 
-Current the application supports two databases:
+Currently, the application supports two databases:
 
 * [Microsoft SQL Server](#microsoft-sql-server)
 * [SQLite](#sqlite)
@@ -101,5 +101,5 @@ builder.Services.AddTransient<IContactDataStore, SqlServerDataStore>();
 You may need to update the `ApiRootUri` setting in the *Contacts.Web* project's [appsettings.Development.json](./src/Contacts.WebUi/appsettings.Development.json) and/or [appsettings.json](./src/Contacts.WebUi/appsettings.json) file(s) with the URL to your instance of the *Contacts.Api* project.
 
 If you're running locally, with no changes to the Api project startup options,
-the setting should be "https://localhost:5901/" (don't forget the trailing slash).  
+the setting should be "https://localhost:5901/" (remember the trailing slash).  
 Otherwise, set the URL and port to whatever you configured.
